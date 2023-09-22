@@ -5,8 +5,8 @@ export const createTaskSchema = z.object({
     name: z.string().nonempty("Nome obrigatório"),
     status: z.string().nonempty(),
     description: z.string().nonempty("Descrição obrigatória"),
-    date: z.date(),
-    image: z.string(),
+    expires_date_in_minutes: z.number(),
+    image: z.string().optional(),
     userId: z.number()
 })
 
@@ -21,6 +21,55 @@ export const createTaskRepo = async (data: createTaskType) => {
 
         return task;
     } catch (e) {
-        return e;
+        throw e; 
+    }
+}
+
+export const getTasks = async (
+    userId?: number,
+    taskId?: number
+) => {
+    try {
+        const filters = {
+            where: {
+                ...(userId ? { userId } : {}),
+                ...(taskId ? { id: taskId } : {}),
+            },
+        };
+
+        const tasks = await prisma.task.findMany(filters);
+
+        return tasks;
+    } catch (e) {
+        throw e; 
+    }
+}
+
+export const updateTaskById = async (taskId: number, data: Partial<createTaskType>) => {
+    try {
+        const task = await prisma.task.update({
+            where: {
+                id: taskId
+            },
+            data: data
+        });
+
+        return task;
+    } catch (e) {
+        throw e;
+    }
+}
+
+export const deleteTaskById = async (taskId: number) => {
+    try {
+        const task = await prisma.task.delete({
+            where: {
+                id: taskId
+            }
+        });
+
+        return task;
+    } catch (e) {
+        throw e; 
     }
 }

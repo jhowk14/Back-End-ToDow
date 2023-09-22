@@ -1,8 +1,11 @@
-import { Application} from 'express'; 
-import { createTask } from '../controllers/task.controller';
+import { Application } from 'express';
+import { createTask, updateTask, deleteTask, getTask } from '../controllers/task.controller';
 
-const userRoute = (app: Application) => { 
-    app.post('/task', createTask)
+const taskRoute = (app: Application) => {
+    app.post('/task', createTask);
+    app.put('/task/:taskId', updateTask); // Rota para atualizar uma tarefa pelo ID
+    app.delete('/task/:taskId', deleteTask); // Rota para excluir uma tarefa pelo ID
+    app.get('/task', getTask); // Rota para obter uma tarefa pelo ID
 }
 
-export default userRoute;
+export default taskRoute;

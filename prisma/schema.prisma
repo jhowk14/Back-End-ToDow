@@ -19,14 +19,14 @@ model User {
 }
 
 model Task {
-  id          Int       @id @default(autoincrement())
-  name        String
-  status      String
-  description String
-  date        DateTime
-  image       String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  userId      Int       // Adicione um campo para representar o relacionamento com User
-  user        User      @relation(fields: [userId], references: [id]) // Defina a relação com User
+  id                      Int       @id @default(autoincrement())
+  name                    String
+  status                  String
+  description             String
+  expires_date_in_minutes BigInt
+  image                   String?
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+  userId                  Int       // Adicione um campo para representar o relacionamento com User
+  user                    User      @relation(fields: [userId], references: [id]) // Defina a relação com User
 }
