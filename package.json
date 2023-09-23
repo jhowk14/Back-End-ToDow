@@ -9,6 +9,9 @@
     "test": "vitest",
     "build": "tsup src"
   },
+  "engines": {
+    "node": "18"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
