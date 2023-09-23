@@ -15,8 +15,8 @@ export const updateUserSchema = z.object({
     task: z.number().optional()
 })
 export type CreateUserType = z.infer<typeof createUserSchema>;
-
-export const createUserRepo = async (data: CreateUserType) => {
+export default class UserRepository {
+async createUserRepo(data: CreateUserType){
     try {
         const userData = createUserSchema.parse(data);
         userData.password = await bcrypt.hash(userData.password, 12);
@@ -29,7 +29,7 @@ export const createUserRepo = async (data: CreateUserType) => {
         throw e;
     }
 }
-export const getUserById = async (userId: number) => {
+async getUserById(userId: number){
     try {
         const user = await prisma.user.findUnique({
             where: {
@@ -42,7 +42,7 @@ export const getUserById = async (userId: number) => {
         throw e; 
     }
 }
-export const getAllUser = async () => {
+async getAllUser(){
     try {
         const user = await prisma.user.findMany();
 
@@ -51,7 +51,7 @@ export const getAllUser = async () => {
         throw e; 
     }
 }
-export const updateUserById = async (userId: number, data: Partial<CreateUserType>) => {
+async updateUserById(userId: number, data: Partial<CreateUserType>){
     try {
         const userData = updateUserSchema.parse(data);
         const user = await prisma.user.update({
@@ -69,7 +69,7 @@ export const updateUserById = async (userId: number, data: Partial<CreateUserTyp
         throw e; 
     }
 }
-export const deleteUserById = async (userId: number) => {
+async deleteUserById(userId: number){
     try {
         const user = await prisma.user.delete({
             where: {
@@ -81,4 +81,5 @@ export const deleteUserById = async (userId: number) => {
     } catch (e) {
         throw e;
     }
+}
 }

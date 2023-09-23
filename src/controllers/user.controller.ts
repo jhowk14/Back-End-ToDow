@@ -1,11 +1,13 @@
 import { Request, Response } from 'express';
-import { createUserRepo, createUserSchema, getUserById, getAllUser, updateUserById, deleteUserById } from "../repositorys/user.repo";
+import UserRepository, { createUserSchema } from '../repositorys/user.repo';
+
+const user = new UserRepository()
 
 export const createUser = async (req: Request, res: Response) => { 
     try {
         const data = req.body;
         const userData = createUserSchema.parse(data);
-        const response = await createUserRepo(userData);
+        const response = await user.createUserRepo(userData);
         res.status(201).json(response);
     } catch (error) {
         res.status(400).json(error);
@@ -15,12 +17,12 @@ export const createUser = async (req: Request, res: Response) => {
 export const getUser = async (req: Request, res: Response) => { 
     try {
         const userId = parseInt(req.params.userId);
-        const user = await getUserById(userId);
+        const users = await user.getUserById(userId);
 
-        if (!user) {
+        if (!users) {
             res.status(404).json({ message: 'Usuário não encontrado' });
         } else {
-            res.status(200).json(user);
+            res.status(200).json(users);
         }
     } catch (error) {
         res.status(400).json(error);
@@ -29,7 +31,7 @@ export const getUser = async (req: Request, res: Response) => {
 
 export const getAllUsers = async (req: Request, res: Response) => { 
     try {
-        const users = await getAllUser();
+        const users = await user.getAllUser();
         res.status(200).json(users);
     } catch (error) {
         res.status(400).json(error);
@@ -40,12 +42,12 @@ export const updateUser = async (req: Request, res: Response) => {
     try {
         const userId = parseInt(req.params.userId);
         const data = req.body;
-        const user = await updateUserById(userId, data);
+        const users = await user.updateUserById(userId, data);
 
-        if (!user) {
+        if (!users) {
             res.status(404).json({ message: 'Usuário não encontrado' });
         } else {
-            res.status(200).json(user);
+            res.status(200).json(users);
         }
     } catch (error) {
         res.status(400).json(error);
@@ -55,9 +57,9 @@ export const updateUser = async (req: Request, res: Response) => {
 export const deleteUser = async (req: Request, res: Response) => { 
     try {
         const userId = parseInt(req.params.userId);
-        const user = await deleteUserById(userId);
+        const users = await user.deleteUserById(userId);
 
-        if (!user) {
+        if (!users) {
             res.status(404).json({ message: 'Usuário não encontrado' });
         } else {
             res.status(204).send(); // Resposta sem conteúdo se a exclusão for bem-sucedida

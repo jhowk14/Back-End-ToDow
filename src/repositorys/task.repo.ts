@@ -12,7 +12,8 @@ export const createTaskSchema = z.object({
 
 export type createTaskType = z.infer<typeof createTaskSchema>;
 
-export const createTaskRepo = async (data: createTaskType) => {
+export default class TaskRepository {
+async createTaskRepo(data: createTaskType){
     try {
         const taskData = createTaskSchema.parse(data);
         const task = await prisma.task.create({
@@ -24,11 +25,10 @@ export const createTaskRepo = async (data: createTaskType) => {
         throw e; 
     }
 }
-
-export const getTasks = async (
+async getTasks(
     userId?: number,
     taskId?: number
-) => {
+){
     try {
         const filters = {
             where: {
@@ -45,7 +45,7 @@ export const getTasks = async (
     }
 }
 
-export const updateTaskById = async (taskId: number, data: Partial<createTaskType>) => {
+async updateTaskById(taskId: number, data: Partial<createTaskType>){
     try {
         const task = await prisma.task.update({
             where: {
@@ -60,7 +60,7 @@ export const updateTaskById = async (taskId: number, data: Partial<createTaskTyp
     }
 }
 
-export const deleteTaskById = async (taskId: number) => {
+async deleteTaskById (taskId: number){
     try {
         const task = await prisma.task.delete({
             where: {
@@ -72,4 +72,5 @@ export const deleteTaskById = async (taskId: number) => {
     } catch (e) {
         throw e; 
     }
+}
 }

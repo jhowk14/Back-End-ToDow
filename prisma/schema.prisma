@@ -25,7 +25,7 @@ model Task {
   name                    String
   status                  String
   description             String
-  expires_date_in_minutes BigInt
+  expires_date_in_minutes Int
   image                   String?
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
