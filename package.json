@@ -4,10 +4,10 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "start": "pnpm i && node dist/server.js && npx prisma migrate deploy",
+    "start": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
     "test": "vitest",
-    "build": "tsup src"
+    "build": "pnpm i && npx prisma migrate deploy && tsup src"
   },
   "keywords": [],
   "author": "",
