@@ -3,7 +3,7 @@ import { createUser, getAllUsers, updateUser, deleteUser,getUser } from '../cont
 import { authAuthorization } from '../middleware/authAutorization';
 
 const userRoute = (app: Application) => {
-    app.post('/user', authAuthorization ,createUser);
+    app.post('/user',createUser);
     app.get('/user', authAuthorization ,getAllUsers);
     app.get('/user/:userId',authAuthorization , getUser); // Rota para buscar um usuário pelo ID
     app.put('/user/:userId', authAuthorization ,updateUser); // Rota para atualizar um usuário pelo ID
