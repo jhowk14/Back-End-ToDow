@@ -6,7 +6,7 @@ const jwtSecret = process.env.JWT_SECRET;
 
 export const authAuthorization = (req: Request, res: Response, next: NextFunction) => {
     const token = req.header('Authorization');
-    const apiKey = req.headers['apikey']; // Use letras minúsculas para a chave 'apikey'
+    const apiKey = req.headers['api_key']; // Use letras minúsculas para a chave 'apikey'
 
     if (!token && !apiKey) {
         throw new ApiError("Authorization token or API key is missing", 401);
@@ -16,7 +16,6 @@ export const authAuthorization = (req: Request, res: Response, next: NextFunctio
         throw new ApiError("JWT_SECRET is not defined", 500);
     }
 
-    try {
         if (token) {
             const decodedToken = verify(token, jwtSecret);
             // Adicione o usuário autenticado ao objeto de solicitação para que as rotas subsequentes possam acessá-lo
@@ -28,7 +27,4 @@ export const authAuthorization = (req: Request, res: Response, next: NextFunctio
         }
 
         next(); // Avança para a próxima função middleware ou rota
-    } catch (error) {
-        throw new ApiError("Unauthorized", 402);
-    }
 };
