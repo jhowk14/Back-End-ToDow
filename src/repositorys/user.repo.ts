@@ -1,6 +1,7 @@
 import prisma from "../services/prisma";
 import { z } from 'zod'
 import bcrypt from 'bcrypt';
+import { ApiError } from "../helpers/erroHelper";
 
 export const createUserSchema = z.object({
     name: z.string().nonempty('O nome e obrigatorio'),
@@ -20,7 +21,14 @@ async createUserRepo(data: CreateUserType){
     try {
         const userData = createUserSchema.parse(data);
         userData.password = await bcrypt.hash(userData.password, 12);
-
+        const userExist = await prisma.user.findUnique({
+            where: {
+                email: userData.email, 
+            },
+        });
+        if(userExist){
+            throw new ApiError("user email already exists", 401)
+        }
         const user = await prisma.user.create({
             data: userData
         });

@@ -6,7 +6,7 @@ const taskRoute = (app: Application) => {
     app.post('/task', authAuthorization ,createTask);
     app.put('/task/:taskId', authAuthorization ,updateTask); // Rota para atualizar uma tarefa pelo ID
     app.delete('/task/:taskId',authAuthorization , deleteTask); // Rota para excluir uma tarefa pelo ID
-    app.get('/task',authAuthorization , getTask); // Rota para obter uma tarefa pelo ID
+    app.get('/task/:userId',authAuthorization , getTask); // Rota para obter uma tarefa pelo ID
 }
 
 export default taskRoute;

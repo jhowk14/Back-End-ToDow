@@ -25,13 +25,13 @@ async createTaskRepo(data: createTaskType){
     }
 }
 async getTasks(
-    userId?: number,
+    userId: number,
     taskId?: number
 ){
     try {
         const tasks = await prisma.task.findMany({
             where: {
-              ...(userId ? { userId } : {}),
+              ...({ userId}),
               ...(taskId ? { id: taskId } : {}),
             },
             include: {

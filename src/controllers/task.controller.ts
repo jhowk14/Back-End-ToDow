@@ -42,10 +42,10 @@ export const deleteTask = async (req: Request, res: Response) => {
 }
 
 export const getTask = async (req: Request, res: Response) => {
-        const {taskId ,userId} = req.body; // Certifique-se de que taskId seja um número
-        
+        const {taskId} = req.body; // Certifique-se de que taskId seja um número
+        const userId = req.params.userId
         // Chame a função para obter uma tarefa pelo ID
-        const task = await tasks.getTasks(userId, taskId); // Passamos undefined para userId e taskId para o ID da tarefa
+        const task = await tasks.getTasks(parseInt(userId), taskId); // Passamos undefined para userId e taskId para o ID da tarefa
 
         res.status(200).json(task); // Assumindo que a função getTasks retorna um array de tarefas, retornamos a primeira (ou única) tarefa encontrada.
 }
