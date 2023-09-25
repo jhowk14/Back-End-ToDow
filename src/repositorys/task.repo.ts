@@ -30,14 +30,15 @@ async getTasks(
     taskId?: number
 ){
     try {
-        const filters = {
+        const tasks = await prisma.task.findMany({
             where: {
-                ...(userId ? { userId } : {}),
-                ...(taskId ? { id: taskId } : {}),
+              ...(userId ? { userId } : {}),
+              ...(taskId ? { id: taskId } : {}),
             },
-        };
-
-        const tasks = await prisma.task.findMany(filters);
+            include: {
+              user: true, // Substitua "User" pelo nome correto da relação em seu modelo Prisma
+            },
+          });
 
         return tasks;
     } catch (e) {
