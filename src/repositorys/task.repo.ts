@@ -3,9 +3,8 @@ import { z } from 'zod'
 
 export const createTaskSchema = z.object({
     name: z.string().nonempty("Nome obrigatório"),
-    status: z.string().nonempty(),
+    status: z.boolean(),
     description: z.string().nonempty("Descrição obrigatória"),
-    expires_date_in_minutes: z.number(),
     image: z.string().optional(),
     userId: z.number()
 })

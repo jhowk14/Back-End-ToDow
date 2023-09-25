@@ -23,9 +23,8 @@ model User {
 model Task {
   id                      Int       @id @default(autoincrement())
   name                    String
-  status                  String
+  status                  Boolean
   description             String
-  expires_date_in_minutes Int
   image                   String?
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
