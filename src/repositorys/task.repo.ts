@@ -36,7 +36,7 @@ async getTasks(
               ...(taskId ? { id: taskId } : {}),
             },
             include: {
-              user: true, // Substitua "User" pelo nome correto da relação em seu modelo Prisma
+              user: true, 
             },
           });
 
